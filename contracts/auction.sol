@@ -13,7 +13,8 @@ contract auction  is ERC721URIStorage{
 
     address owner;
     uint current_NFTprice;
-    uint auction_time; 
+    uint auction_time;
+    bool auctionStatus;
 
 
    using Counters for Counters.Counter;
@@ -47,9 +48,11 @@ contract auction  is ERC721URIStorage{
 
     function setInitialPrice(uint _NFTPrice) external onlyOwner {
         current_NFTprice = _NFTPrice;  
+        auctionStatus = true;
     }
 
     function auctionNFT (uint _auctionPrice) external {
+        require (auctionStatus == true, "Auction has not started");
         require(auction_time >block.timestamp, "Auction has ended");
         require (_auctionPrice > current_NFTprice, "Price too low, auction higher");
         current_NFTprice = _auctionPrice;
@@ -58,7 +61,8 @@ contract auction  is ERC721URIStorage{
         emit bidders(msg.sender, _auctionPrice);
     }
 
-      function highestBidder (string memory uri) external payable{
+      function claimBid (string memory uri) external payable{
+        require(block.timestamp > auction_time, "Auction has not ended");
         address winner = participantAddress[participantAddress.length - 1];
         require (msg.sender == winner, "You are not the higgest bidder");
         require (msg.value >= current_NFTprice, "You can't get it lower than you bidded");
