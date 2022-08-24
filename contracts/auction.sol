@@ -79,6 +79,7 @@ contract auction  is ERC721URIStorage{
     }
 
     function getFundsOut() external onlyOwner {
+        require(block.timestamp >= auction_time, "You can't withdaw now");
         require(msg.sender != address(0), "Can't withdraw to this address");
         payable(msg.sender).transfer(address(this).balance); 
     }
