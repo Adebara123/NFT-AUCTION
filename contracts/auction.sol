@@ -7,7 +7,7 @@ contract auction  is ERC721URIStorage{
     // a function where nft is minted to the winer can call that function 
     // a state variable where price can be changed as people keep auctioning
     // a function people can use to change the auction price, it cannot be changed to a lesser value 
-    // a function people can use to sender their wins but can't send it unless they pay the money to agreed
+    // a function people can use to sender their wins but can't send it unless they pay the price bided
     // a function where the ower can set an initial price of the auction
     // create a time to stop the aution 
 
